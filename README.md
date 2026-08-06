@@ -1,8 +1,8 @@
 # Clash for Windows Meta Core Patch
 
-> **项目性质：这是一个修改过的非官方 Clash for Windows 版本。**
+> **项目性质：这是一个 Clash for Windows 修复脚本。**
 >
-> 本项目基于 Clash for Windows 0.20.39 Windows x64 版本进行兼容性改造，主要目标是将旧 Clash 核心替换为 MetaCubeX/mihomo，并修复 Service Mode、TUN、TAP、Mixin、订阅兼容和软件内核心更新等功能。
+> 本项目基于 Clash for Windows 0.20.39 Windows x64 版本进行修改，主要目标是将旧 Clash 核心替换为 MetaCubeX/mihomo，并修复 Service Mode、TUN、TAP、Mixin、订阅兼容和软件内核心更新等功能。
 >
 > 本项目不是 Clash for Windows 官方版本，也不代表 Clash for Windows 原作者、Fndroid、MetaCubeX、Z-Siqi 或其他上游作者、组织及贡献者。上述主体未对本项目作出背书、担保或技术支持承诺。
 
