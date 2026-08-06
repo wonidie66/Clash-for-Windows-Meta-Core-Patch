@@ -23,7 +23,7 @@ Clash for Windows 已经停止维护，原版内置 Clash 核心也较旧，无�
 
 本项目是修改过的非官方 Clash for Windows 版本。
 
-本项目不是 Clash for Windows 官方版本，也不代表 Clash for Windows 原作者、Fndroid、MetaCubeX、Z-Siqi 或其他上游作者、组织及贡献者。上述主体未对本项目作出背书、担保或技术支持承诺。
+本项目不是 Clash for Windows 官方版本，也不代表 Clash for Windows 原作者、Fndroid、MetaCube或其他上游作者、组织及贡献者。上述主体未对本项目作出背书、担保或技术支持承诺。
 
 项目名称中的 “Clash for Windows” 仅用于说明被修改的软件和兼容目标，不表示官方授权、官方发布或上游合作关系。
 
