@@ -1,4 +1,4 @@
-﻿# 第三方项目与署名说明
+# 第三方项目与署名说明
 
 ## Clash for Windows
 
@@ -10,14 +10,30 @@
 
 ## MetaCubeX/mihomo 核心
 
-在线安装路径从 MetaCubeX 官方 GitHub Release 下载第三方核心。此 Full 离线变体另外内置一份未修改的 `mihomo-windows-amd64-compatible-v1.19.29.zip`，官方 SHA-256 为 `322AAA5957BA9E72AFDDA9B71CC4329F691D2D45EC39E70BBCA3F7BF5AA93D52`。
+在线安装路径从 MetaCubeX 官方 GitHub Release 下载第三方核心。Full 离线版另外内置一份未修改的：
 
-Mihomo v1.19.29 适用 GNU GPL v3.0。本项目不对该核心重新许可，也不声称与 MetaCubeX 存在官方关系。再分发时必须保留 GPLv3 文本、来源和版本说明，并按照 GPLv3 提供对应源代码。详见 `MIHOMO-THIRD-PARTY-NOTICE.md`、`MIHOMO-SOURCE-OFFER.md` 和 `LICENSES/MIHOMO-GPL-3.0.txt`。
+```text
+mihomo-windows-amd64-compatible-v1.19.29.zip
+```
+
+官方 SHA-256：
+
+```text
+322AAA5957BA9E72AFDDA9B71CC4329F691D2D45EC39E70BBCA3F7BF5AA93D52
+```
+
+Mihomo v1.19.29 适用 GNU GPL v3.0。本项目不对该核心重新许可，也不声称与 MetaCubeX 存在官方关系。再分发时必须保留 GPLv3 文本、来源和版本说明，并按照 GPLv3 提供对应源代码。
+
+详见：
+
+- `MIHOMO-THIRD-PARTY-NOTICE.md`
+- `MIHOMO-SOURCE-OFFER.md`
+- `LICENSES/MIHOMO-GPL-3.0.txt`
 
 ## Electron、npm、WinSW、Wintun、TAP 及其他依赖
 
 Clash for Windows 运行环境包含 Electron、npm 依赖、Windows 服务包装器、网络驱动和其他第三方组件。它们分别适用各自许可证和声明。不得使用本项目的补丁代码许可证替换这些第三方许可证。
 
-## 无官方关系
+## 其他说明
 
-Fndroid、MetaCubeX、Z-Siqi、Clash for Windows 及其贡献者未因本项目的发布而自动成为维护者、担保人或技术支持方。
+本项目尽力保留第三方来源、许可证和发布边界说明。若发现遗漏或不准确之处，请提交 Issue 并提供可核验来源。

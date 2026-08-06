@@ -1,195 +1,313 @@
-﻿# Clash for Windows Meta Core Patch
+# Clash for Windows Meta Core Patch
 
-> **项目性质：基于 Clash for Windows 0.20.39 修改的非官方 Windows x64 版本。**
+> **项目性质：这是一个修改过的非官方 Clash for Windows 版本。**
 >
-> 本项目不是 Clash for Windows 官方版本，也不代表 Fndroid、MetaCubeX、Z-Siqi 或其他上游作者、组织及贡献者。上述主体未对本项目作出背书、担保或技术支持承诺。
+> 本项目基于 Clash for Windows 0.20.39 Windows x64 版本进行兼容性改造，主要目标是将旧 Clash 核心替换为 MetaCubeX/mihomo，并修复 Service Mode、TUN、TAP、Mixin、订阅兼容和软件内核心更新等功能。
+>
+> 本项目不是 Clash for Windows 官方版本，也不代表 Clash for Windows 原作者、Fndroid、MetaCubeX、Z-Siqi 或其他上游作者、组织及贡献者。上述主体未对本项目作出背书、担保或技术支持承诺。
 
-## 项目用途
+## 项目简介
 
-Clash for Windows 已停止维护，旧核心无法完整支持部分现代配置和协议。本项目在保留原有界面与使用习惯的基础上，替换并适配现代核心，修复服务模式、TUN 模式、TAP 虚拟网卡、混合配置和核心更新等功能。
+Clash for Windows 已停止维护，原版内置旧核心无法完整支持部分现代订阅配置和新协议。本项目保留 Clash for Windows 原有界面和使用习惯，同时通过脚本和辅助程序完成以下兼容性修复：
 
-本项目只提供客户端兼容性改造，不提供订阅、节点、代理服务器、账号或任何网络服务。
+- 替换为 MetaCubeX/mihomo 核心；
+- 支持 AnyTLS 等 Mihomo 新协议和现代节点格式；
+- 修复新版订阅导入和配置兼容问题；
+- 修复 Service Mode 服务模式；
+- 修复 TUN 模式；
+- 修复 TAP 虚拟网卡模式；
+- 保留 YAML 与 JavaScript Mixin；
+- 将原应用更新入口改造为 Mihomo 核心更新入口；
+- 安装、更新、还原过程加入 SHA-256 校验、备份和失败回滚；
+- 提供诊断脚本，方便排查核心、服务、端口、TUN/TAP 等问题。
 
-## 主要功能
+本项目只提供客户端兼容性改造，不提供订阅、节点、账号、服务器或任何网络服务。
 
-- 使用 MetaCubeX 官方 GitHub Release 提供的 Windows x64 compatible 核心。
-- 支持本地模式、系统代理、服务模式、TUN 模式和 TAP 虚拟网卡模式。
-- 保留 YAML 与 JavaScript 混合配置功能。
-- 改进现代订阅配置及 AnyTLS 等协议的兼容性。
-- 使用 Windows 原生 UAC 提权辅助程序，并提供 PowerShell 回退路径。
-- 将已经停止维护的应用更新入口改为核心更新入口。
-- 在 Clash for Windows 内显示核心更新进度。
-- 更新前校验文件、测试配置、创建备份；失败时自动回滚。
-- 提供一键还原和诊断工具。
+## 下载哪个版本
 
-## 安装脚本会做什么
+请到 GitHub Releases 页面下载正式发布包。
 
-为了便于用户审核，安装器的主要操作公开如下：
-
-1. 检查目标目录中是否存在 `Clash for Windows.exe`。
-2. 请求 Windows 管理员权限，用于替换程序文件、安装 Windows 服务和配置 TUN/TAP 所需组件。
-3. 停止正在运行的 Clash for Windows、旧核心和同名旧服务，避免文件占用。
-4. 备份原始 `app.asar`、旧的解包运行目录、原始核心和原始服务辅助程序。
-5. 写入修改后的 Clash for Windows Electron 运行文件。
-6. 从 MetaCubeX 官方 GitHub Release 下载指定架构的核心，并执行 SHA-256 校验。
-7. 将核心安装到 Clash for Windows 的核心目录，同时复制一份到受保护的服务模式目录。
-8. 创建仅用于本机服务模式认证的随机令牌，并限制令牌、核心和服务配置文件的 Windows ACL 权限。
-9. 移除可能冲突的旧 `Clash Core Service` 服务或同名计划任务，再安装新的本地 Windows 服务。
-10. 生成安装日志；任何关键步骤失败时停止安装，不把部分安装误报为成功。
-
-详细目录和文件变化请查看 `SECURITY-TRANSPARENCY.md`。
-
-## 安装脚本不会做什么
-
-按本版本公开源码和脚本设计，安装器不会：
-
-- 上传订阅链接、节点信息、配置文件、日志或设备信息；
-- 收集遥测、广告标识或用户行为数据；
-- 创建用户账号、远程桌面、远程管理入口或公网监听的控制端口；
-- 安装根证书、浏览器扩展、键盘记录、屏幕捕获或文件监控组件；
-- 添加与 Clash for Windows 无关的开机启动项或隐藏计划任务；
-- 修改 Windows Defender、系统安全策略或防火墙规则；
-- 从第三方网盘或不明镜像下载核心；
-- 删除用户的订阅、配置文件和代理规则。
-
-这里的“不会”仅针对本项目发布的安装器和更新器。Clash for Windows 自身在用户主动启用系统代理、开机启动、TUN 或 TAP 功能时，仍会按对应功能修改系统网络状态。
-
-## 为什么需要管理员权限
-
-以下操作属于 Windows 系统级操作，普通用户权限无法完成：
-
-- 修改 Program Files 中的程序文件；
-- 安装、启动或卸载 Windows 服务；
-- 部署受保护的核心文件并设置 ACL；
-- 安装或管理 TAP 虚拟网卡；
-- 以 SYSTEM 权限运行 TUN 核心。
-
-所有由 Clash for Windows 客户端发起的安装、卸载和更新操作均应显示标准 Windows UAC 确认。用户取消 UAC 后，操作应立即停止。
-
-## 核心更新机制
-
-核心更新器会：
-
-1. 查询上游官方 Release；
-2. 对比当前核心与最新稳定版本；
-3. 下载 Windows x64 compatible 构建；
-4. 校验官方发布文件的 SHA-256；
-5. 解压并验证核心真实版本；
-6. 使用新核心测试当前配置；
-7. 备份本地核心、服务模式核心和服务配置；
-8. 停止旧核心并替换文件；
-9. 更新服务模式核心哈希并重启服务；
-10. 成功后提示重新加载 Clash for Windows，失败时恢复备份。
-
-更新窗口只负责显示更新器写入的本地状态，不会把日志上传到服务器。
-
-## 文件与隐私
-
-用户配置通常位于：
+普通用户推荐下载：
 
 ```text
-%USERPROFILE%\.config\clash
+Clash-for-Windows-Meta-Core-Patch-v1.5.4.1-full-offline.zip
 ```
 
-本项目会在该目录创建服务认证令牌和更新日志，但不会主动读取并上传其中的订阅或节点内容。提交 Issue 前必须手动脱敏，不要公开订阅 URL、访问令牌、服务器地址、密码、私钥或完整配置。
+这个 Full 离线版已经内置一份经过校验的官方 Mihomo 核心。网络无法访问 GitHub 时，也可以选择本地核心完成安装。
 
-## 安装方法
+同时建议下载：
 
-1. 准备 Clash for Windows 0.20.39 Windows x64 安装目录。
-2. 从系统托盘完全退出 Clash for Windows。
-3. 将发布压缩包完整解压到新的独立文件夹。
-4. 运行 `install.cmd`。
-5. 选择包含 `Clash for Windows.exe` 的目录。
-6. 确认 Windows UAC。
-7. 安装完成后正常启动 Clash for Windows。
+```text
+Clash-for-Windows-Meta-Core-Patch-v1.5.4.1-full-offline-SHA256.txt
+```
 
-不要直接在压缩包内运行脚本，也不要把不同版本的补丁解压到同一个目录中混用。
+发布者还应在同一个 Release 中提供 Mihomo v1.19.29 对应源代码压缩包，例如：
 
-## 还原与诊断
+```text
+mihomo-v1.19.29-source.zip
+```
 
-- `restore.cmd`：停止并移除补丁服务，删除受保护核心和令牌，在备份存在时恢复原始 Clash for Windows 文件。
-- `diagnose.cmd`：只读取本机核心版本、配置路径、相关进程、监听端口和服务状态，并测试本机 `127.0.0.1` 服务接口。
+## 新手使用说明
 
-还原脚本不会删除用户订阅、配置文件和规则。
+### 第一步：完整解压
 
-## 风险说明
+下载后请先完整解压压缩包。不要直接在压缩包里面双击运行脚本。
 
-- Clash for Windows 本身已经停止维护，其 Electron 运行环境和依赖可能存在未修复的安全问题。
-- 系统代理、TUN 和 TAP 会改变系统网络路径，错误配置可能导致暂时无法联网。
-- 第三方订阅内容不受本项目控制，用户应自行判断来源可信度。
-- 任何软件都无法保证绝对不存在缺陷；建议在使用前查看源码、核对 SHA-256，并保留原程序备份。
+建议解压到普通目录，例如：
 
-## 非官方及责任声明
+```text
+D:\Tools\Clash-for-Windows-Meta-Core-Patch
+```
 
-本项目是修改过的非官方 Clash for Windows 版本。项目名称仅用于说明兼容目标，不表示官方关系、商标授权或上游背书。
+或：
 
-软件按“现状”提供，不作适销性、特定用途适用性、持续可用性或无错误保证。用户应自行承担安装、配置、更新和使用产生的风险，并遵守所在地法律、网络管理规定及第三方服务条款。
+```text
+C:\Users\你的用户名\Desktop\Clash-for-Windows-Meta-Core-Patch
+```
 
-## 许可与第三方文件
+### 第二步：退出 Clash for Windows
 
-- 本项目独立编写的安装器、更新器、诊断工具、提权辅助程序和服务辅助程序源码，以仓库中的许可证为准。
-- 修改后的 Clash for Windows 运行文件、汉化材料、Electron/npm 依赖和下载的第三方核心，仍受各自权利人及上游许可证约束。
-- 本项目的补丁代码许可证不自动覆盖第三方文件，也不表示对第三方作品重新授权。
-- 完整发布包与纯源码仓库的许可范围不同，请同时阅读 `LEGAL-NOTICE.md` 和 `THIRD_PARTY_NOTICES.md`。
+安装前请完全退出 Clash for Windows。
 
-为兼容已经验证通过的旧版本，程序内部目录、HTTP 请求头或变量名中可能保留 `CFW` 或旧内部标识；这些仅用于技术兼容，不作为项目公开名称。
+注意：不是只关闭窗口，而是要在右下角系统托盘找到 Clash for Windows 图标，右键选择退出。
 
-## 问题反馈
+### 第三步：运行安装脚本
 
-提交问题时请提供：
+在解压后的文件夹中找到：
 
-- Windows 版本；
-- Clash for Windows 安装类型和补丁版本；
-- 复现步骤；
-- 脱敏后的 `install.log`、`uninstall.log`、更新日志或 `diagnose.cmd` 输出。
+```text
+install.cmd
+```
 
-不要提交订阅链接、服务商 Token、节点密码、私钥、Cookie 或能够识别个人身份的信息。
+推荐操作方式：
 
+1. 右键点击 `install.cmd`；
+2. 选择“以管理员身份运行”；
+3. 如果 Windows 弹出 UAC 权限确认，点击“是”。
 
-## v1.5.4 核心来源选择
+需要管理员权限的原因是，本项目需要安装或修复 Service Mode、TUN、TAP、Windows 服务和 ProgramData 受保护目录，这些都属于系统级操作。
 
-安装器现在支持两种 Mihomo 核心来源：
+### 第四步：输入 Clash for Windows 安装目录
 
-1. **在线安装**：从 MetaCubeX/mihomo 官方 GitHub Release 查询并下载最新稳定版 `windows-amd64-compatible` 核心。直接按回车时默认选择此方式。
-2. **本地安装**：从安装包的 `bundled-core` 文件夹读取 `mihomo-windows-amd64-compatible-v*.zip`。
+安装器会提示输入 Clash for Windows 的安装目录。
 
-如果在线查询或下载失败，并且 `bundled-core` 中存在已校验的本地核心，安装器会询问是否自动回退到本地核心。
+例如 Clash for Windows 安装在：
 
-本地核心安装前仍会执行文件名检查、SHA-256 校验、真实版本验证以及当前 Clash for Windows 配置兼容性测试。校验或测试失败时不会替换现有核心。
+```text
+E:\Program Files\Clash.for.Windows
+```
 
-### 安装时如何选择
+就输入：
 
-运行 `install.cmd` 后会看到：
+```text
+E:\Program Files\Clash.for.Windows
+```
+
+也可以直接粘贴完整程序路径：
+
+```text
+E:\Program Files\Clash.for.Windows\Clash for Windows.exe
+```
+
+不知道安装目录时，可以右键桌面上的 Clash for Windows 快捷方式，选择“打开文件所在的位置”，复制地址栏路径。
+
+### 第五步：选择 Mihomo 核心来源
+
+安装器会显示类似选项：
 
 ```text
 请选择 Mihomo 核心来源：
   [1] 从 GitHub 下载官方最新稳定版 Mihomo 核心（默认，需要能够访问 GitHub）
-  [2] 使用安装包中的本地 Mihomo 核心：文件名或未检测到
+  [2] 使用安装包中的本地 Mihomo 核心：mihomo-windows-amd64-compatible-v1.19.29.zip
 
 请输入 1 或 2，直接按回车默认选择 1：
 ```
 
-网络可以正常访问 GitHub 时选择 `1`；无法访问 GitHub 或网络不稳定时，将官方核心压缩包放入 `bundled-core` 后选择 `2`。
+建议：
 
+- 能正常访问 GitHub：直接按回车或输入 `1`；
+- 不能访问 GitHub：输入 `2`；
+- 在线下载失败且包内存在本地核心时，安装器会询问是否回退到本地核心。
 
-## v1.5.4.1 服务安装修复
+### 第六步：等待安装完成
 
-如果 v1.5.4 在日志末尾出现 `WMI.WmiException: NoSuchService`，不需要先还原。完全退出 Clash for Windows 后，以管理员身份直接运行 v1.5.4.1 的 `install.cmd`，安装器会清理残留服务目录并继续完成服务注册。
+安装器会自动完成以下操作：
 
-`icacls` 输出中的中文用户名乱码只影响旧版日志显示；v1.5.4.1 不再记录该原生乱码输出，而是记录实际执行的 Unicode 路径。
+- 检查管理员权限；
+- 识别 Clash for Windows 安装目录；
+- 停止正在运行的 Clash for Windows 和旧核心进程；
+- 备份原始文件；
+- 安装修改后的运行文件；
+- 下载或读取本地 Mihomo 核心；
+- 校验核心 SHA-256；
+- 验证核心版本；
+- 测试当前配置兼容性；
+- 替换旧核心；
+- 安装或修复 Service Mode；
+- 设置服务认证令牌和 ACL；
+- 验证核心、服务和端口状态。
 
-## Full 离线版内置核心
+成功时会看到类似：
 
-本 Full 离线版已经在 `bundled-core` 目录内置 MetaCubeX/mihomo v1.19.29 官方 `windows-amd64-compatible` 压缩包。该文件保持上游原始内容不变，SHA-256 为：
+```text
+Installation completed successfully.
+```
+
+或：
+
+```text
+安装完成
+```
+
+### 第七步：启动 Clash for Windows
+
+安装完成后，正常启动 Clash for Windows。
+
+进入配置页面导入订阅，然后先测试系统代理，再测试 Service Mode、TUN Mode 或 TAP 虚拟网卡模式。
+
+普通用户不要一开始同时打开 TUN、TAP、Service Mode 和复杂 Mixin。建议一个功能一个功能测试。
+
+## 普通用户主要运行哪些文件
+
+| 文件 | 用途 | 是否建议管理员运行 |
+|---|---|---|
+| `install.cmd` | 安装或修复本补丁 | 是 |
+| `restore.cmd` | 尝试恢复安装前状态 | 是 |
+| `diagnose.cmd` | 诊断核心、服务、端口、TUN/TAP 等状态 | 是 |
+| `生成Full离线包.cmd` | 发布者制作 Full 离线包使用 | 是，普通用户不用 |
+
+普通用户不要随意运行 `.ps1`、`.exe`、`src`、`tools`、`service-helper-src`、`elevation-helper-src` 中的文件。它们主要用于安装器自动调用、源码审查或重新构建。
+
+## 当前支持的常见节点类型
+
+具体支持能力取决于当前安装的 MetaCubeX/mihomo 版本。本项目不重新实现代理协议，只负责让 Clash for Windows 正确调用 Mihomo 核心。
+
+常见支持类型包括：
+
+- Shadowsocks / ShadowsocksR
+- VMess
+- VLESS
+- Trojan
+- Hysteria / Hysteria2
+- TUIC
+- WireGuard
+- AnyTLS
+- Snell
+- SSH
+- HTTP / SOCKS5
+- Mieru
+- MASQUE
+- OpenVPN
+- Tailscale
+- GostRelay
+
+节点是否可用还取决于订阅服务端输出格式、节点参数和 Mihomo 版本。如果订阅服务端没有输出 Clash Meta/Mihomo 格式，客户端无法凭空恢复被服务端过滤掉的节点。
+
+## Full 离线版内置 Mihomo 说明
+
+Full 离线版内置一份未修改的 MetaCubeX/mihomo 官方发布文件：
+
+```text
+mihomo-windows-amd64-compatible-v1.19.29.zip
+```
+
+官方 SHA-256：
 
 ```text
 322AAA5957BA9E72AFDDA9B71CC4329F691D2D45EC39E70BBCA3F7BF5AA93D52
 ```
 
-运行 `install.cmd` 后，网络正常时仍可选择 `[1]` 在线安装最新稳定版；无法访问 GitHub 时选择 `[2]` 即可使用内置核心。安装器会在安装前再次完成哈希、版本和配置兼容性验证。
+Mihomo v1.19.29 适用 GNU GPL v3.0。本项目没有修改、重新编译或重新许可该核心，也不代表 MetaCubeX 对本项目作出背书。
 
-内置 Mihomo 核心适用 GPL-3.0。本项目没有修改或重新编译该核心。发布者和二次分发者必须同时保留 GPLv3 文本、第三方来源说明，并保证对应版本源代码可获得。详见：
+再分发 Full 离线包时，请同时保留：
 
+```text
+MIHOMO-THIRD-PARTY-NOTICE.md
+MIHOMO-SOURCE-OFFER.md
+LICENSES/MIHOMO-GPL-3.0.txt
+```
+
+并在同一个 Release 中提供对应源代码压缩包，例如：
+
+```text
+mihomo-v1.19.29-source.zip
+```
+
+## 安装器不会做什么
+
+本项目不会：
+
+- 上传你的订阅链接；
+- 上传你的节点信息；
+- 上传你的配置文件；
+- 上传你的日志文件；
+- 收集遥测或用户行为数据；
+- 安装根证书；
+- 安装浏览器扩展；
+- 创建远程桌面、反向 Shell 或公网管理接口；
+- 关闭 Windows Defender；
+- 修改防火墙规则；
+- 捆绑广告、挖矿或其他第三方软件；
+- 删除你的订阅、规则和用户配置。
+
+## 诊断方法
+
+遇到以下情况可以运行：
+
+```text
+diagnose.cmd
+```
+
+适用问题包括：
+
+- 核心无法启动；
+- 日志不可用；
+- 端口显示异常；
+- 节点无法显示；
+- Service Mode 失败；
+- TUN Mode 无法使用；
+- TAP 虚拟网卡无法安装；
+- 更新失败。
+
+提交 Issue 前，请隐藏敏感信息，例如订阅链接、Token、UUID、节点密码、私钥、服务器地址和完整配置文件。
+
+## 还原方法
+
+需要恢复安装前状态时，可以运行：
+
+```text
+restore.cmd
+```
+
+建议右键选择“以管理员身份运行”。还原脚本会尝试恢复安装前备份的运行文件、旧核心和服务组件。
+
+如果你手动删除过备份目录，或者原 Clash for Windows 安装目录已经损坏，还原可能无法完整完成。此时建议重新安装原版 Clash for Windows。
+
+## 注意事项
+
+- 本项目仅面向 Windows x64；
+- 建议基于 Clash for Windows 0.20.39 使用；
+- 安装前请退出 Clash for Windows；
+- Service Mode、TUN Mode、TAP 虚拟网卡需要管理员权限；
+- TUN Mode 和 TAP 虚拟网卡模式不建议同时开启；
+- 如果安全软件拦截，请先查看脚本内容和日志，不建议盲目放行未知来源文件；
+- 如果订阅导入后节点为空，通常是订阅服务端没有输出 Clash Meta/Mihomo 格式；
+- 本项目不保证所有机场、所有订阅转换器、所有节点参数都可用。
+
+## 免责声明
+
+本项目按“现状”提供，不承诺适用于所有系统环境、所有订阅服务、所有节点格式或所有网络环境。
+
+使用本项目造成的配置损坏、网络异常、系统代理异常、服务异常、订阅失效、数据丢失、软件冲突或其他后果，由用户自行承担。
+
+本项目不提供任何规避监管、绕过限制或违反法律法规的建议。用户应自行确保使用行为合法合规。
+
+更多说明请阅读：
+
+- `DISCLAIMER_zh-CN.md`
+- `UNOFFICIAL-NOTICE_zh-CN.md`
+- `SECURITY-TRANSPARENCY.md`
+- `LEGAL-NOTICE.md`
+- `THIRD_PARTY_NOTICES.md`
 - `MIHOMO-THIRD-PARTY-NOTICE.md`
 - `MIHOMO-SOURCE-OFFER.md`
-- `LICENSES/MIHOMO-GPL-3.0.txt`

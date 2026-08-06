@@ -1,37 +1,29 @@
-﻿# 更新日志
+# 更新日志
 
 ## v1.5.4.1
 
-- Fixed `WMI.WmiException: NoSuchService` when an old WinSW directory exists but the Windows service is absent.
-- Native WinSW, `schtasks`, `sc` and `icacls` calls are now handled by exit code instead of native stderr text.
-- Suppressed incorrectly decoded `icacls` output for Chinese Windows profile paths.
-- Changed CMD launcher contents to ASCII to prevent trailing Chinese commands from being misparsed.
-- Re-running the installer now repairs the partial state left by the v1.5.4 failure.
+- 修复旧 WinSW 目录存在但 Windows 服务不存在时触发的 `WMI.WmiException: NoSuchService`。
+- WinSW、`schtasks`、`sc`、`icacls` 等原生命令改为按退出码判断结果，避免把普通清理输出误判为致命错误。
+- 避免中文 Windows 用户目录在 `icacls` 输出中出现乱码并污染日志。
+- `install.cmd` 改为纯 ASCII 启动器，避免 CMD 将中文提示残留误识别为命令。
+- 支持从 v1.5.4 失败后的半安装状态直接重新运行修复。
+- 已实机验证：在线安装、本地安装和核心还原均正常。
 
 ## v1.5.4
 
-- Added online latest / bundled local Mihomo core selection.
-- Added automatic local fallback after online download failure.
-- Localized core-source prompts in Chinese.
-- Added local package SHA-256, version and config validation.
-- Removed test-only scripts and descriptions.
+- 安装时新增 Mihomo 核心来源选择：在线下载最新版或使用本地内置核心。
+- 在线查询或下载失败时，可回退到本地核心。
+- 核心来源选择提示改为中文。
+- 本地核心安装前增加文件名、SHA-256、版本和配置兼容性验证。
+- 移除测试脚本、测试说明和降级测试材料。
 
 ## v1.5.3
 
-- 采用经过实机验证的完整安装、核心启动和控制 API 连接逻辑。
-- 支持本地模式、系统代理、服务模式、TUN、TAP 虚拟网卡和混合配置。
-- 修复 Clash for Windows 客户端内部服务模式及 TAP 安装/卸载提权流程。
-- 改进现代订阅配置和 AnyTLS 兼容性。
-- 将停止维护的 Clash for Windows 应用更新入口改为上游核心更新入口。
-- 增加 Clash for Windows 内部核心更新进度窗口。
-- 增加 SHA-256 校验、新核心版本验证、当前配置验证、备份和失败回滚。
-- 使用 Windows 原生 UAC 辅助程序并保留 PowerShell 回退路径。
-- 支持中文用户名、中文路径、空格和常见特殊字符路径。
-- 移除固定版本核心降级、更新测试和开发验证脚本。
-- 增加非官方声明、安全透明说明、第三方声明和适合 GitHub Release 的更新说明。
-## v1.5.4.1 Full 离线发布变体
+- 回到 v1.4 稳定基础逻辑，结合 v1.5.1 可用的核心更新机制。
+- 保留软件内核心更新进度显示。
+- 修复 v1.5.2 中因 PowerShell 引号和控制器 API 处理导致的问题。
 
-- 内置未修改的 MetaCubeX/mihomo v1.19.29 Windows AMD64 compatible 官方压缩包。
-- 内置核心 SHA-256 与官方 Release digest 匹配。
-- 增加 Mihomo GPL-3.0 许可证副本、第三方再分发说明和对应源代码获取说明。
-- 在线安装仍默认获取最新稳定版；网络不可用时可以选择本地 v1.19.29 核心。
+## v1.4
+
+- 完成 Service Mode、TUN、TAP、Mixin 和订阅兼容基础修复。
+- 建立后续版本的稳定基线。

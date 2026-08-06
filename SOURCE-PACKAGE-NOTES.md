@@ -1,7 +1,31 @@
-# Repository source package notes
+# 仓库源码包说明
 
-This archive is intended for the GitHub repository root. It contains the project documentation, installer/update/diagnostic scripts, helper program source files, and bundled-core metadata examples.
+本压缩包用于上传到 GitHub 仓库根目录。
 
-It intentionally does not include the modified Clash for Windows runtime payload, third-party binary payloads, or the bundled Mihomo binary. Those files are distributed through GitHub Release Assets, not as repository source files.
+它包含：
 
-For public release, upload the contents of this archive to the repository root, then upload the Full/Lite runtime zip packages as Release Assets.
+- 中文项目说明文档；
+- 安装、还原、诊断脚本；
+- 软件内核心更新脚本；
+- Full 离线包构建脚本；
+- 提权辅助程序源码；
+- 服务辅助程序源码；
+- bundled-core 示例文件和说明；
+- Mihomo 再分发说明和 GPL-3.0 许可证文本。
+
+它不包含：
+
+- 修改后的 Clash for Windows 运行时文件；
+- Full 离线正式发布包；
+- Mihomo 官方核心 ZIP；
+- 其他第三方运行时二进制文件。
+
+这些运行时文件应作为 GitHub Release Assets 发布，不建议直接放在仓库源码根目录。
+
+推荐用法：
+
+1. 解压本压缩包；
+2. 将里面的所有内容上传到仓库根目录；
+3. 不要再保留旧版 v1.5.3 文档；
+4. 到 Releases 页面上传正式运行包和 SHA-256 文件；
+5. 如果发布 Full 离线版，请同时上传 Mihomo 对应源代码压缩包。

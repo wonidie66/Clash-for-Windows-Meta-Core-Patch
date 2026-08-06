@@ -1,10 +1,10 @@
-Project: Clash for Windows Meta Core Patch
-Version: v1.5.4.1
-Variant: Full offline release
-Base: v1.5.3 stable baseline
-Fixes: service cleanup and Windows CMD encoding hotfix on v1.5.4
-Platform: Windows x64
-Bundled core: MetaCubeX/mihomo v1.19.29 windows-amd64-compatible (unmodified official package)
-Bundled core SHA-256: 322AAA5957BA9E72AFDDA9B71CC4329F691D2D45EC39E70BBCA3F7BF5AA93D52
-Bundled core license: GPL-3.0
-Status: formal release
+项目：Clash for Windows Meta Core Patch
+版本：v1.5.4.1
+类型：Full 离线版仓库源码包
+基础版本：v1.5.3 稳定基线
+修复内容：v1.5.4 服务清理异常和 Windows CMD 编码问题
+平台：Windows x64
+内置核心说明：Full 离线正式发布包可内置 MetaCubeX/mihomo v1.19.29 windows-amd64-compatible 未修改官方压缩包
+内置核心 SHA-256：322AAA5957BA9E72AFDDA9B71CC4329F691D2D45EC39E70BBCA3F7BF5AA93D52
+内置核心许可证：GPL-3.0
+状态：正式发布
