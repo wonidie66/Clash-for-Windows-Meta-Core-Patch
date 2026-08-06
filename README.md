@@ -1,6 +1,6 @@
 # Clash for Windows Fix Patch
 
-> **修改过的非官方 Clash for Windows 修复补丁。**
+> **非官方 Clash for Windows 修复补丁。**
 >
 > 本项目面向 Windows x64，用于修复 Clash for Windows 0.20.39 停止维护后出现的旧核心、订阅兼容、Service Mode、TUN、TAP、Mixin 和软件内核心更新等问题。
 >
