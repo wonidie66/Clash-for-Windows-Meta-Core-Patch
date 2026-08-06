@@ -8,6 +8,10 @@
 
 ## 项目简介
 
+Clash for Windows Fix Patch 是一个面向 Windows x64 的非官方 Clash for Windows 修复补丁。它主要用于解决原 Clash for Windows 停止维护后出现的核心过旧、订阅兼容性不足、Service Mode 异常、TUN/TAP 功能异常以及新版节点类型不支持等问题。
+
+本项目通过替换旧核心、修复服务模式认证、补充核心更新逻辑、提供离线核心安装方式，使旧版 Clash for Windows 0.20.39 在现代订阅和新版节点环境下继续可用。
+
 Clash for Windows 已停止维护，原版内置旧核心无法完整支持部分现代订阅配置和新协议。本项目保留 Clash for Windows 原有界面和使用习惯，同时通过脚本和辅助程序完成以下兼容性修复：
 
 - 替换为 MetaCubeX/mihomo 核心；
