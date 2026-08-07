@@ -12,7 +12,7 @@
 
 本项目适合遇到以下问题的用户：
 
-- Clash for Windows 原版核心过旧；
+- Clash for Windows 原版核心失效；
 - 新版订阅导入失败或节点不完整；
 - AnyTLS 等新版节点类型无法识别；
 - Service Mode 无法安装、启动或正常工作；
