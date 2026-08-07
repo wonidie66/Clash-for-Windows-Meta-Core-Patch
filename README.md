@@ -1,14 +1,14 @@
 # Clash for Windows Fix Patch
 
-> **非官方 Clash for Windows 修复补丁。**
+> ** Clash for Windows 修复补丁。**
 >
-> 本项目面向 Windows x64，用于修复 Clash for Windows 0.20.39 停止维护后出现的旧核心、订阅兼容、Service Mode、TUN、TAP、Mixin 和软件内核心更新等问题。
+> 本项目用于修复 Clash for Windows 停止维护后出现的不兼容新节点、Service Mode失效、TUN失效和软件内核心更新等问题。
 >
 > 本项目不是 Clash for Windows 官方版本，也不代表 Clash for Windows 原作者、Fndroid、MetaCubeX、Z-Siqi 或其他上游作者、组织及贡献者。本项目不提供订阅、节点、账号、服务器或任何网络服务。
 
 ## 项目简介
 
-**Clash for Windows Fix Patch** 是一个面向旧版 Clash for Windows 的非官方修复补丁。它保留 Clash for Windows 原有界面和使用习惯，通过替换旧核心和修复相关组件，使 Clash for Windows 0.20.39 在现代订阅、新版节点和 Windows x64 环境下继续可用。
+**Clash for Windows Fix Patch** 是一个面向旧版 Clash for Windows 的非官方修复补丁。它保留 Clash for Windows 原有界面和使用习惯，通过替换旧核心和修复相关组件，使 Clash for Windows 在现代订阅、新版节环境下继续可用。
 
 本项目适合遇到以下问题的用户：
 
@@ -18,8 +18,7 @@
 - Service Mode 无法安装、启动或正常工作；
 - TUN Mode 异常；
 - TAP 虚拟网卡模式异常；
-- 软件内核心更新功能失效；
-- GitHub 访问困难，安装时无法在线下载核心。
+- 软件内核心更新功能失效。
 
 ## 主要功能
 
